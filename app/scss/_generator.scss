@@ -1,0 +1,225 @@
+.main {
+    // Sección de password generado
+    .generated__password {
+        position: relative;
+        align-items: center;
+        margin-bottom: 1em;
+        padding: 1em;
+        .password__text {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 1.3em;
+            font-weight: 500;
+            color: $grey-30;
+        }
+        .password__copy {
+            width: 24px;
+            height: 24px;  
+            filter: invert(87%) sepia(14%) saturate(978%) hue-rotate(70deg) brightness(103%) contrast(104%);
+            opacity: 1;
+            transition: 60ms ease-in filter;
+            &:hover {
+                cursor: pointer;
+                filter: invert(100%) sepia(83%) saturate(271%) hue-rotate(181deg) brightness(95%) contrast(93%);
+            }
+            &.img--hidden {
+                visibility: hidden;
+            }
+        }
+
+        .input--copied {
+            position: absolute;
+            right: 1em;
+            color: $green;
+
+            @media (min-width: 450px) {
+                right: 3.5em;
+            }
+        }
+
+        .input--empty {
+            position: absolute;
+            color: $red;
+        }
+
+
+    }
+
+    // Sección para generar password
+    .generator__password {
+        color: $grey-30;
+
+        .password__character-length,
+        .password__character-includes,
+        .password__generate {
+            display: flex;
+            flex-direction: column;
+            padding: 1em;
+        }
+        .password__character-length {
+            .label--range {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1em;
+
+                .subtitle {
+                    font-size: 1.2em;
+                }
+                
+                .characters {
+                    font-size: 1.5em;
+                    font-weight: 600;
+                    color: $green;
+                }
+            }
+
+            .range {
+                height: .5em;
+                -webkit-appearance: none;
+                appearance: none;
+                outline: none;
+                background: linear-gradient(to right, $green 0% var(--percentage), $black var(--percentage) 100%);
+                margin-top: .5em;
+                margin-bottom: .5em;
+                &::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    border: none;
+                    height: 1.5em;
+                    width: 1.5em;
+                    border-radius: 50%;
+                    border: .15em solid transparent;
+                    background-color: $grey-30;
+                    transition: 100ms ease-in background-color, 100ms ease-in border-color;
+
+                    @media (hover: hover) {
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $black;
+                            border-color: $green;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        .password__character-includes {
+
+            .include__type {
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+                align-items: center;
+                margin-bottom: 1em;
+                
+                input[type=checkbox]{
+                    appearance: none;
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 1em;
+                    background-color: transparent;
+                    border: .15em solid $grey-30;
+                    transition: 100ms ease-in border-color;
+
+                    @media (hover: hover) {
+                        &:hover {
+                            cursor: pointer;
+                            border-color: $green;
+                        }
+                    }
+
+                    &:checked {
+                        position: relative;
+                        background-color: $green;
+                        border-color: $green;
+
+                        &::before {
+                            position: absolute;
+                            content: url(/dist/images/icon-check.svg);
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+
+                
+            }
+        }
+    }
+
+    // Sección medir fuerza contraseña
+    .password__strength {
+        padding: 0 1em;
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1em;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            background-color: $grey-90;
+            .subtitle {
+                color: $grey-30;
+                opacity: .9;
+            }
+            .strength__levels {
+                display: flex;
+                align-items: center;
+                .level {
+                    height: 1.6em;
+                    width: .6em;
+                    border: .15em solid $grey-30;
+                    margin-left: .4em;
+                    transition: 60ms ease-in background-color;
+
+                    &.level--1 {
+                        background-color: $red;
+                        border-color: $red;
+                    }
+                    &.level--2 {
+                        background-color: $orange;
+                        border-color: $orange;
+                    }
+                    &.level--3 {
+                        background-color: $yellow;
+                        border-color: $yellow;
+                    }
+                    &.level--4 {
+                        background-color: $green;
+                        border-color: $green;
+                    }
+                }
+            }
+        }
+    }
+
+    // Sección botón generar contraseña
+    .btn--primary {
+        @include btn--primary;
+        transition: 100ms ease-in all;
+
+        @media (hover: hover) {
+            &:hover {
+                cursor: pointer;
+                background-color: transparent;
+                border-color: $green;
+                color: $green;
+
+                .img__btn {
+                    filter: invert(87%) sepia(14%) saturate(978%) hue-rotate(70deg) brightness(103%) contrast(104%);
+                }
+            }
+        }
+
+        .img__btn {
+            @include img--btn(16px);
+            margin-left: 10px;
+        }
+    }
+}
