@@ -1,7 +1,7 @@
 {
-  "name": "password-generator-app",
+  "name": "password-generator-tool",
   "version": "1.0.0",
-  "description": "Password Generator App with html5, sass, javaScript, ecmaScript6",
+  "description": "Password Generator is a online tool that generate strong and secure password with letter, number and/or symbols",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,4 +1,5 @@
-// DOM 
+/* VARIABLES Y OBJETOS*/
+
 const section = document.querySelector(".generated__password");
 const passGenerated = document.querySelector(".password__text");
 const copyPass = document.querySelector(".password__copy");
@@ -9,11 +10,8 @@ const passStrength = document.querySelector(".level__text");
 const level = document.querySelectorAll(".level");
 const btnGenerate = document.querySelector(".btn--generate");
 
-// Style variable
 const percentage = document.documentElement.style;
 
-
-// Character control included
 const charactersIncluded = {
     includeUppercase : true,
     includeLowercase: true,
@@ -22,25 +20,40 @@ const charactersIncluded = {
 }
 
 
-// Evento click botón generar password
+/* EVENTOS */
+
+// Generate password
 btnGenerate.addEventListener("click", (e) => {
-    if (enabledGenerate){
-        e.preventDefault();
-        generatePassword();
-        strenghtPassword();
+    e.preventDefault();
+    generatePassword();
+    strenghtPassword();
+})
+
+
+
+// Copy password
+copyPass.addEventListener("click", () => {
+    if (passGenerated.value !== ""){
+        navigator.clipboard.writeText(passGenerated.value);
+        (navigator.clipboard.writeText(passGenerated.value)) && setMessage("input--copied", "Copied!");
+        (window.outerWidth < 450) && copyPass.classList.add("img--hidden");
     }
 })
 
+
+
+/* FUNCIONES */
 
 // Set button generate
 const enabledGenerate = () => {
     btnGenerate.disabled = false;
     copyPass.disabled = false;
-    btnGenerate.setAttribute("aria-disabled", "false")
+    btnGenerate.setAttribute("aria-disabled", "false");
 }
 const disabledGenerate = () => {
     btnGenerate.disabled = true;
-    btnGenerate.setAttribute("aria-disabled", "true")
+    btnGenerate.setAttribute("aria-disabled", "true");
+    setMessage("input--empty", "Generate password");
 }
 
 
@@ -99,16 +112,27 @@ const setMessage = (state, text) => {
     const message = document.createElement("span");
     message.classList.add(state);
     message.textContent = text;
-
-    (window.outerWidth < 450) && copyPass.classList.add("img--hidden");
     section.appendChild(message)
 
-    setTimeout(() => {
-        (window.outerWidth < 450) && copyPass.classList.remove("img--hidden");
-        message.remove();
-    }, 1500)
+    if (passGenerated.value != ""){
+       setTimeout(() => {
+            (window.outerWidth < 450) && copyPass.classList.remove("img--hidden");
+            message.remove();
+        }, 1500)
 
+    } else {
+        const mutationObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(mutation => {
+                if(mutation.attributeName == "disabled"){
+                    (!mutation.target.disabled) && message.remove();
+                }
+            });
+        });
+
+        mutationObserver.observe(btnGenerate, {attributes: true});
+    }
 }
+
 
 
 // Characters Available
@@ -185,22 +209,3 @@ const strenghtPassword = () => {
     }
 }
 strenghtPassword()
-
-
-
-// Copy Password
-const copyPassword = () => {
-
-    copyPass.addEventListener("click", () => {
-    
-        if (passGenerated.value !== ""){
-
-            navigator.clipboard.writeText(passGenerated.value);
-            (navigator.clipboard.writeText(passGenerated.value)) && setMessage("input--copied", "Copied!");
-            
-        } else {
-            setMessage("input--empty", "Generate a password")            
-        }
-    })
-}
-copyPassword()
