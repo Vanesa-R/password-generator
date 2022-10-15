@@ -1,6 +1,7 @@
 /* Genéricas */
 const { src, dest, series, parallel } = require('gulp');
 // const del = require("del");
+const ghPages = require('gulp-gh-pages');
 const plumber = require("gulp-plumber");
 // /*Para tareas html */
 const htmlmin = require("gulp-htmlmin")
@@ -66,19 +67,18 @@ const images = done => {
 }
 
 
+const deploy = done => {
+    src("./dist/**/*")
+    .pipe(ghPages())
+    done();
+
+}
+
 //Borrar ficheros no definitivos de la carpeta dist
 // gulp.task("clean", function(){
 //     return del("dist");
 // });
 
-
-
-// PROCESO COMPLETO AUTOMATIZADO
-
-// gulp.task("package", 
-//     gulp.series("clean", 
-//     gulp.parallel ("html", "css", "js"), 
-//     "images"));
-
+exports.deployed = series(deploy)
 
 exports.package = series(parallel(html, css, js), images)
