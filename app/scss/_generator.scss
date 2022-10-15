@@ -215,6 +215,9 @@
                     filter: invert(87%) sepia(14%) saturate(978%) hue-rotate(70deg) brightness(103%) contrast(104%);
                 }
             }
+            &:disabled {
+                cursor: not-allowed;
+            }
         }
 
         .img__btn {
