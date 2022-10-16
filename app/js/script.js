@@ -16,7 +16,7 @@ const charactersIncluded = {
     includeUppercase : true,
     includeLowercase: true,
     includeNumbers: true,
-    includeSymbols: false
+    includeSymbols: true
 }
 
 
@@ -60,7 +60,7 @@ const disabledGenerate = () => {
 
 // Set password length
 const setRange = () => {
-    percentage.setProperty("--percentage", "50%")
+    percentage.setProperty("--percentage", "60%")
 
     rangeBar.addEventListener("input", (e) => {
         percentage.setProperty("--percentage", `${rangeBar.value * 5}%`)
@@ -110,26 +110,28 @@ setIncludes()
 const setMessage = (state, text) => {
 
     const message = document.createElement("span");
-    message.classList.add(state);
-    message.textContent = text;
-    section.appendChild(message)
-
-    if (passGenerated.value != ""){
-       setTimeout(() => {
-            (window.outerWidth < 450) && copyPass.classList.remove("img--hidden");
-            message.remove();
-        }, 1500)
-
-    } else {
-        const mutationObserver = new MutationObserver(function(mutations) {
-            mutations.forEach(mutation => {
-                if(mutation.attributeName == "disabled"){
-                    (!mutation.target.disabled) && message.remove();
-                }
+    if (!document.querySelector(".input--empty")){
+        message.classList.add(state);
+        message.textContent = text;
+        section.appendChild(message)
+    
+        if (passGenerated.value != ""){
+           setTimeout(() => {
+                (window.outerWidth < 450) && copyPass.classList.remove("img--hidden");
+                message.remove();
+            }, 1500)
+    
+        } else {
+            const mutationObserver = new MutationObserver(function(mutations) {
+                mutations.forEach(mutation => {
+                    if(mutation.attributeName == "disabled"){
+                        (!mutation.target.disabled) && message.remove();
+                    }
+                });
             });
-        });
-
-        mutationObserver.observe(btnGenerate, {attributes: true});
+    
+            mutationObserver.observe(btnGenerate, {attributes: true});
+        }
     }
 }
 
@@ -161,14 +163,18 @@ const generatePassword = () => {
     (charactersIncluded.includeNumbers == true) && allCharactersIncluded.push(numbers);
     (charactersIncluded.includeSymbols == true) && allCharactersIncluded.push(symbols);
 
-    allCharactersIncluded = allCharactersIncluded.join(",").split(",");
 
-    for (let i = 0; i < rangeBar.value; i++){
-        let c = allCharactersIncluded[Math.floor(Math.random() * allCharactersIncluded.length)]
-        randomPasword.push(String.fromCharCode(c))
+    if (allCharactersIncluded.length > 0){
+        allCharactersIncluded = allCharactersIncluded.join(",").split(",");
+    
+        for (let i = 0; i < rangeBar.value; i++){
+            let c = allCharactersIncluded[Math.floor(Math.random() * allCharactersIncluded.length)]
+            randomPasword.push(String.fromCharCode(c))
+        }
     }
     passGenerated.value = `${randomPasword.join("")}`;
     (passGenerated.value == "") ? disabledGenerate() : enabledGenerate();
+
 }
 generatePassword()
 

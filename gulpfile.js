@@ -1,7 +1,7 @@
 /* Genéricas */
 const { src, dest, series, parallel } = require('gulp');
 // const del = require("del");
-const ghPages = require('gulp-gh-pages');
+const ghPages = require('gh-pages');
 const plumber = require("gulp-plumber");
 // /*Para tareas html */
 const htmlmin = require("gulp-htmlmin")
