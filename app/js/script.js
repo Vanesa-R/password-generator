@@ -16,7 +16,7 @@ const charactersIncluded = {
     includeUppercase : true,
     includeLowercase: true,
     includeNumbers: true,
-    includeSymbols: false
+    includeSymbols: true
 }
 
 
@@ -60,7 +60,7 @@ const disabledGenerate = () => {
 
 // Set password length
 const setRange = () => {
-    percentage.setProperty("--percentage", "50%")
+    percentage.setProperty("--percentage", "60%")
 
     rangeBar.addEventListener("input", (e) => {
         percentage.setProperty("--percentage", `${rangeBar.value * 5}%`)
